@@ -1,0 +1,169 @@
+@use "../../Styles/partials/global" as *;
+@use '../../Styles/partials/variables' as *;
+@use '../../Styles/partials/mixins' as *;
+
+.main{
+    &__section{
+        @include tablet{
+            padding:2.25rem;
+        }
+    }
+    @include tablet{
+        margin: auto;
+        padding: auto;
+    }
+    &__title{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 1rem;
+        border-bottom: 1px solid $mercury;
+        @include tablet{
+            border-color: $white;
+            @include tablet-h1;
+        }
+        @include desktop{
+            @include tablet-h1;
+        }
+    }
+
+    &__details{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap:2.625rem;
+        margin: 1rem 0rem;
+        border-bottom: 0.0625rem solid $mercury;
+        @include tablet{
+            justify-content: space-between;
+            padding-bottom: 1rem;
+        }
+    }
+
+    &__channel-date{
+        display: flex;
+        flex-direction: column;
+        padding-left: 1rem;
+        @include tablet{
+            flex-direction: row;
+            align-items: center;
+        }
+        
+    }
+
+    &__channel{
+        @include tablet{
+            @include tablet-h2;
+        }
+        @include desktop{
+            @include tablet-h2;
+        }
+    }
+
+    &__views-likes{
+        display: flex;
+        flex-direction: column;
+        @include tablet{
+            flex-direction: row;
+        }
+
+    }
+
+    &__timestamp{
+        color: $silver;
+        margin-top: 0.625rem;
+        margin-bottom: 0.625rem;
+        @include tablet{
+            margin-left: 1.5rem;
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+            @include tablet-p;
+        }
+        @include desktop{
+            @include tablet-p;
+        }
+    }
+
+
+    &__views{
+        display: flex;
+        flex-direction: row;
+        color: $silver;
+        @include tablet{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: 0.625rem;
+            margin-top: 0rem;
+        } 
+    }
+
+    &__likes{
+        display: flex;
+        flex-direction: row;
+        color: $silver;
+        margin-top: 0.625rem;
+        margin-bottom: 0.625rem;
+        @include tablet{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: 1.5rem;
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+        }
+    }
+
+    &__likes-icon{
+        margin-right: 1.0625rem;
+        @include tablet{
+            margin-top: 0rem;
+            margin-right: 0.3125rem;
+            width: 1.5rem;
+        }
+        
+    }
+
+    &__views-icon{
+        margin-right: 0.625rem;
+        @include tablet{
+            width: 1.5rem; 
+        }
+        
+    }
+    &__description{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: auto;
+        margin: auto;
+        @include tablet{
+            @include tablet-p;
+        }
+        @include desktop{
+            @include tablet-p;
+        }
+    }
+    
+    &__text{
+        color: $brainflix-black;
+        padding: 1rem;
+        font-size: 1.25rem;
+    }
+    &__likes-num{
+        @include tablet{
+            @include tablet-p;
+        }
+        @include desktop{
+            @include tablet-p;
+        }
+    }
+    &__views-num{
+        @include tablet{
+            @include tablet-p;
+        }
+        @include desktop{
+            @include tablet-p;
+        }
+    }
+}

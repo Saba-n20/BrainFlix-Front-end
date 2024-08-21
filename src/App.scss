@@ -1,0 +1,26 @@
+@use "./Styles/partials/global" as *;
+@use './Styles/partials/variables' as *;
+@use './Styles/partials/mixins' as *;
+.app{
+    &__des-comments-next{
+        display: flex;
+        flex-direction: column;
+
+        @include desktop{
+            flex-direction: row;
+            width: 100%;
+        }
+    }
+
+    &__comments-number{
+        padding-left: 1.625rem;
+        @include tablet{
+            @include tablet-h3;
+        }
+        @include desktop{
+            padding-left: 7rem;
+            @include tablet-h3;
+        }
+    
+    }
+}

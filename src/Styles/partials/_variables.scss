@@ -1,0 +1,24 @@
+//colors:
+$brainflix-black: #323232;
+$silver: #AFAFAF;
+$white: #FFFFFF;
+$brainflix-blue: #0095FF;
+$brainflix-darkblack: #000000;
+$brainflix-darkblue: #0065AD;
+$mercury: #E1E1E1;
+$alabaster:  #FAFAFA;
+
+//screen size:
+$tablet-breakpoint: 48rem;
+$desktop-breakpoint: 80rem;
+
+:export{
+    brainflix-black : $brainflix-black;
+    silver : $silver;
+    white : $white;
+    brainflix-blue : $brainflix-blue;
+    brainflix-darkblack : $brainflix-darkblack;
+    brainflix-darkblue : $brainflix-darkblue;
+    mercury : $mercury;
+    alabaster : $alabaster;
+}
