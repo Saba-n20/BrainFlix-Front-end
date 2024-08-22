@@ -6,7 +6,7 @@ const VideoItem = ({video, onVideoSelect}) =>{
           onClick={() => onVideoSelect(video)}
         >
           <img 
-            src={video.image} 
+            src={video.image}
             alt={video.title} 
             className="sidebar__thumbnail" 
           />
