@@ -1,0 +1,158 @@
+@use "../../Styles/partials/global" as *;
+@use '../../Styles/partials/variables' as *;
+@use '../../Styles/partials/mixins' as *;
+
+.header {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    @include tablet {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    flex-direction: column;
+    width: 8.125rem;
+    height: 1.5625rem;
+    margin: 0.625rem;
+    @include tablet {
+      width: 18.75rem;
+    }
+    @include desktop {
+      width: 28.125rem;
+      padding-left: 6.25rem;
+      margin: 0rem;
+    }
+  }
+
+  &__logo-image{
+    @include desktop{
+        width: 9.375rem;
+    }
+  }
+
+  &__search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5625rem;
+    width: 90%;
+    position: relative;
+    @include tablet {
+      padding-left: 12.5rem;
+    }
+    @include desktop {
+      padding-left: 25rem;
+    }
+  }
+
+  &__search-bar-wrapper {
+    flex-grow: 1; 
+    position: relative;
+  }
+
+  &__search-bar {
+    width: 18.75rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    padding-left: 2.1875rem;
+    &:focus {
+      border-color: $brainflix-blue;
+    }
+    &::placeholder {
+      color: $brainflix-black;
+      font-size: 0.9375rem;
+      font-weight: 400;
+    }
+    @include tablet{
+      &::placeholder{
+       @include tablet-btn-lab;
+      }
+    }
+    @include desktop{
+      &::placeholder{
+       @include tablet-btn-lab;
+      }
+    }
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%); // Vertically center the icon
+    height: 1.25rem;
+  }
+
+  &__avatar-image-mobile {
+    height: 2.5rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+    @include tablet {
+      display: none;
+    }
+  }
+  &__button-avatar-tablet {
+    @include tablet {
+      display: flex;
+      padding-right: 3.75rem;
+    }
+    @include desktop {
+      display: flex;
+      padding-right: 5.625rem;
+    }
+  }
+  &__button-icon {
+    display: flex;
+    flex-direction: column;
+    @include tablet {
+      padding-right: 1.875rem;
+    }
+  }
+  &__button {
+    width: 22.5rem;
+    height: 2.5rem;
+    border-color: $brainflix-blue;
+    border-radius: 0.25rem;
+    background-color: $brainflix-blue;
+    color: $white;
+    position: relative;
+    &:hover {
+      background-color: $brainflix-darkblue;
+      border-color: $brainflix-darkblue;
+    }
+    @include tablet {
+      width: 11.25rem;
+      @include tablet-btn-lab
+    }
+    @include desktop{
+       @include tablet-btn-lab;
+      }
+  }
+  &__upload-icon {
+    position: absolute;
+    right: 20.3125rem;
+    bottom: 0.3125rem;
+    height: 1.5625rem;
+    @include tablet {
+      right: 9.0625rem;
+    }
+  }
+
+  &__avatar-image-tablet {
+    height: 2.5rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+    display: none;
+    @include tablet {
+      display: flex;
+    }
+  }
+}

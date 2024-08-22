@@ -1,0 +1,128 @@
+@use "../../Styles/partials/global" as *;
+@use '../../Styles/partials/variables' as *;
+@use '../../Styles/partials/mixins' as *;
+
+.form{
+    padding: 1rem;
+    @include tablet{
+        padding: 1rem;
+    }
+    &__container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    border-bottom: 0.0625rem solid $mercury;
+    padding-left: 0.75rem;
+    padding-bottom: 0.75rem;
+    @include tablet{
+        align-items: center;
+    }
+    @include desktop{
+        padding-left: 5.625rem;
+    }
+}
+
+    
+    &__avatar-image{
+        height: 3rem;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-top: 1rem;
+        margin-left:1.5rem;
+        @include desktop{
+            margin-right: 1.5rem;
+        }
+        
+    }
+
+    &__input{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__input-label{
+        margin-left: 1.5rem;
+        color: $silver;
+        @include tablet{
+            margin-top: 0.625rem;
+            margin-left: 0.625rem;
+            @include tablet-btn-lab;
+        }
+        @include desktop{
+            margin-left: 1.5rem;
+            @include tablet-btn-lab;
+        }
+    }
+
+    &__input-txt-btn{
+        @include tablet{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+    &__input-txt{
+        width: 87%;
+        height: 7.1875rem;
+        margin-left: 1.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid $silver;
+        background-color: $mercury;
+        &::placeholder{
+            color: $brainflix-black;
+            padding-top: 0.5rem;
+            line-height: 1.2;
+        }
+        @include tablet{
+            height: 3.125rem;
+            width: 65%;
+            margin-left: 1.5rem;
+            &::placeholder{
+                padding-left: 1rem;
+            }
+            
+        }
+    }
+
+    &__button{
+            width: 87%;
+            height: 2.5rem;
+            border-color: $brainflix-blue;
+            border-radius: 0.25rem;
+            background-color: $brainflix-blue;
+            color: $white;
+            margin-left: 1.5rem;
+            position: relative;
+            &:hover {
+              background-color: $brainflix-darkblue;
+              border-color: $brainflix-darkblue;
+            }
+            @include tablet {
+              width: 25%;
+              height: 3.2rem;
+              @include tablet-btn-lab;
+            }
+            @include desktop{
+                @include tablet-btn-lab;
+            }
+    }
+
+    &__comment-icon{
+        position: absolute;
+        right: 15rem;
+        top: 1.2rem;
+        height: 1.5625rem;
+        transform: translateY(-50%); // Vertically center the icon
+        @include tablet{
+            right: 11.5rem;
+            top: 1.55rem;
+        }
+        @include desktop{
+            right: 8.5rem; 
+            top: 1.5rem;
+        }
+    }
+}
