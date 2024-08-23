@@ -1,0 +1,201 @@
+@use "../../Styles/partials/global" as *;
+@use '../../Styles/partials/variables' as *;
+@use '../../Styles/partials/mixins' as *;
+
+
+.upload{
+    border-top: 2px solid $mercury;
+    padding: 16px;
+    @include tablet{
+        padding: 24px;
+    }
+    @include desktop{
+        padding: 50px 100px;
+    }
+
+    &__container{
+        display: flex;
+        flex-direction: column;
+        @include desktop{
+            flex-direction: row;
+        }
+    }
+
+    &__video{
+        @include desktop{
+            width: 100%;
+            padding-left: 24px;
+            padding-top: 16px;
+        }
+    }
+    &__title{
+        padding-top: 24px;
+        padding-bottom: 24px;
+        color: $brainflix-black;
+        @include tablet{
+            border-bottom: 2px solid $mercury;
+            @include tablet-h1;
+        }
+        @include desktop{
+            padding-top: 0rem;
+        }
+    }
+
+    &__thumbnail-title{
+        color: $silver;
+        @include tablet{
+            padding: 24px 0px 5px 0px;
+            @include tablet-h2;
+        }
+    }
+    &__img{
+        width: 100%;
+        height: auto;
+        @include tablet{
+            width: 480px;
+        }
+        @include desktop{
+            width: 400px;
+        }
+    }
+
+    &__title-txt-label{
+        display: flex;
+        flex-direction: column;
+        color: $silver;
+        padding-top: 16px;
+        @include tablet{
+            @include tablet-btn-lab;
+        }
+        @include desktop{
+            @include tablet-btn-lab;
+        }
+    }
+    &__title-video-txt{
+        width: 100%;
+        height: 45px;
+        border-radius: 4px;
+        padding-left: 16px;
+        background-color: $alabaster;
+        border-color: $silver;
+        &::placeholder{
+            color: $brainflix-black;
+        }
+        @include tablet{
+            &::placeholder{
+                @include tablet-btn-lab;
+            }
+        }
+        @include desktop{
+            &::placeholder{
+                @include tablet-btn-lab;
+            }
+        }
+    }
+    
+    &__des-txt-label{
+        display: flex;
+        flex-direction: column;
+        color: $silver;
+        padding-top: 16px;
+        @include tablet{
+            @include tablet-btn-lab;
+        }
+        @include desktop{
+            padding-top: 30px;
+            @include tablet-btn-lab;
+        }
+
+    }
+    &__des-video-txt{
+        background-color: $alabaster;
+        width: 100%;
+        height: 100px;
+        border-radius: 4px;
+        padding-left: 16px;
+        padding-top: 10px;
+        border-color: $silver;
+        &::placeholder{
+            color: $brainflix-black;
+        }
+        @include tablet{
+            &::placeholder{
+                @include tablet-btn-lab;
+            }
+        }
+        @include desktop{
+            height: 115px;
+            &::placeholder{
+                @include tablet-btn-lab;
+            }
+        }
+    }
+
+    &__buttons{
+        display: flex;
+        flex-direction: column-reverse;
+        @include tablet{
+            margin-top: 24px;
+            border-top: 2px solid $mercury;
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: 50px;
+            padding-top: 24px;
+        }
+        @include desktop{
+            padding-top: 24px;
+        }
+    }
+    
+
+    &__btn-publish{
+        width: 100%;
+        height: 2.5rem;
+        border-color: $brainflix-blue;
+        border-radius: 0.25rem;
+        background-color: $brainflix-blue;
+        color: $white;
+        margin-top: 16px;
+        position: relative;
+        &:hover {
+          background-color: $brainflix-darkblue;
+          border-color: $brainflix-darkblue;
+        }
+        @include tablet{
+            width: 220px;
+            height: 3.5rem;
+            @include tablet-btn-lab;
+            margin: 0px;
+        }
+    }
+    &__publish-icon{
+        position: absolute;
+        right: 365px;
+        top: 18.5px;
+        height: 1.5625rem;
+        transform: translateY(-50%);
+        @include tablet{
+            right: 185px;
+            top: 25px;
+            transform: translateY(-50%);
+        }
+    }
+
+    &__btn-cancel{
+        width: 100%;
+        height: 2.5rem;
+        border: 0rem;
+        border-color: $white;
+        border-radius: 0rem;
+        background-color: $white;
+        color: $brainflix-blue;
+        margin-top: 16px;
+        position: relative;
+        @include tablet{
+            width: 220px;
+            height: 3.5rem;
+            @include tablet-btn-lab;
+            margin: 0px;
+        }
+    }
+}

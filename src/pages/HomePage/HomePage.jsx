@@ -72,14 +72,8 @@ const HomePage = () => {
   
     try {
       const response = await axios.post(
-        `${API_BASE_URL}${endpoint}${currentVideo.id}/comments`,
+        `${API_BASE_URL}${endpoint}${currentVideo.id}/comments?api_key=${API_KEY}`,
         newComment,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${API_KEY}` 
-          },
-        }
       );
   
       const addedComment = response.data;

@@ -5,7 +5,6 @@ const VideoItem = ({video, setCurrentVideo}) =>{
         <div 
           key={video.id} 
           className="videoList__items" 
-          onClick={() => setCurrentVideo(video)}
         >
           <img 
             src={video.image}
