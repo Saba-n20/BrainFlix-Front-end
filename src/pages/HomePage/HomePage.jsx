@@ -17,41 +17,40 @@ const HomePage = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [videoList, setVideoList] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { videoid } = useParams();
-  const [videoToLoadid, setvideoToLoadid] = useState(null);
+  const [videoToLoadid, setVideoToLoadid] = useState(null);
 
   useEffect(() => {
-    // console.log("videoid:", videoid);
-
     const fetchVideoData = async () => {
+      setLoading(true);
       try {
+        // Fetch the list of videos
         const videoListResponse = await axios.get(
           `${API_BASE_URL}${endpoint}?api_key=${API_KEY}`
         );
-        console.log("Video List Response:", videoListResponse.data);
         const videos = videoListResponse.data;
         setVideoList(videos);
-        setvideoToLoadid(videoid? videoid:videos[0].id);
+        const idToLoad = videoid || (videos.length > 0 ? videos[0].id : null);
+        setVideoToLoadid(idToLoad);
 
-        if (videoid) {
+        // Fetch the current video details
+        if (idToLoad) {
           const currentVideoResponse = await axios.get(
-            `${API_BASE_URL}${endpoint}${videoid}?api_key=${API_KEY}`
+            `${API_BASE_URL}${endpoint}${idToLoad}?api_key=${API_KEY}`
           );
-
           setCurrentVideo(currentVideoResponse.data);
-        } else if (videos.length > 0) {
-          const defaultVideoId = videos[0].id;
-          const defaultVideoResponse = await axios.get(
-            `${API_BASE_URL}${endpoint}${defaultVideoId}?api_key=${API_KEY}`
-          );
-          console.log("Default Video Response:", defaultVideoResponse.data);
-          setCurrentVideo(defaultVideoResponse.data);
+        } else {
+          setCurrentVideo(null);
         }
       } catch (err) {
         console.error("Fetch Error:", err);
         setError(err);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchVideoData();
   }, [videoid]);
 
@@ -69,7 +68,7 @@ const HomePage = () => {
 
   const handleAddComment = async (newComment) => {
     if (!currentVideo) return;
-
+  
     try {
       const response = await axios.post(
         `${API_BASE_URL}${endpoint}${currentVideo.id}/comments`,
@@ -77,36 +76,44 @@ const HomePage = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}` 
           },
         }
       );
-
+  
       const addedComment = response.data;
-      const updatedVideo = {
-        ...currentVideo,
-        comments: [...currentVideo.comments, addedComment],
-      };
-      setCurrentVideo(updatedVideo);
-
+      setCurrentVideo((prevVideo) => ({
+        ...prevVideo,
+        comments: [...prevVideo.comments, addedComment],
+      }));
+  
       setVideoList((prevList) =>
         prevList.map((video) =>
-          video.id === currentVideo.id ? updatedVideo : video
+          video.id === currentVideo.id
+            ? { ...currentVideo, comments: [...currentVideo.comments, addedComment] }
+            : video
         )
       );
     } catch (err) {
       console.error("Error adding comment:", err);
       setError(err);
+      throw err; // Re-throw error to handle in the component
     }
   };
-
+  
   const filteredVideoList = videoList.filter((video) => video.id !== videoToLoadid);
-  if (!currentVideo || !videoList || !filteredVideoList || !videoToLoadid) {
-    return <p>loading...</p>;
+
+  if (loading) {
+    return <p>Loading...</p>;
   }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
   return (
     <div className="homepage">
       <Header title="BrainFlix" />
-      {error && <p>Error: {error.message}</p>}
       {currentVideo ? (
         <>
           <MainVideo video={currentVideo} />
@@ -120,13 +127,10 @@ const HomePage = () => {
               <Comments comments={currentVideo.comments} />
             </div>
             <div className="homepage__sidebar-section">
-        
-                <SideBar
-                  videos={filteredVideoList}
-                  //   onVideoSelect={handleVideoSelect}
-                  setCurrentVideo={setCurrentVideo}
-                />
-            
+              <SideBar
+                videos={filteredVideoList}
+                onVideoSelect={handleVideoSelect}
+              />
             </div>
           </div>
         </>

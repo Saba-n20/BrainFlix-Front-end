@@ -8,7 +8,7 @@ const SideBar = ({ videos, setCurrentVideo }) => {
       <h3 className="sidebar__title">NEXT VIDEO</h3>
       {videos.map((video) => {
         return (
-          <Link to={`/videos/${video.id}`}>
+          <Link key= {video.id} to={`/videos/${video.id}`}>
             <VideoItem video={video} setCurrentVideo={setCurrentVideo} />
           </Link>
         );
