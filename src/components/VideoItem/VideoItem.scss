@@ -1,0 +1,40 @@
+@use "../../Styles/partials/global" as *;
+@use '../../Styles/partials/variables' as *;
+@use '../../Styles/partials/mixins' as *;
+
+.videoList{
+    &__items{
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 1.5rem;
+    }
+    &__info{
+        padding-left: 1rem;
+    }
+    &__title{
+        padding-top: 0.625rem;
+        padding-bottom: 1.875rem;
+        color: $brainflix-black;
+        @include tablet{
+            @include tablet-h3;
+        }
+        @include desktop{
+            @include tablet-h3;
+        }
+    }
+    &__channel{
+        padding-top: 1rem;
+        color: $brainflix-black;
+        @include tablet{
+            @include tablet-p;
+        }
+        @include desktop{
+            @include tablet-p;
+        }
+    }
+    &__thumbnail{
+        width: 10rem;
+        height: auto;
+        border-radius: 0.25rem;
+    }
+}

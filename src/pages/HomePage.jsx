@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import MainVideo from "../components/MainVideo/MainVideo";
 import SideBar from "../components/SideBar/SideBar";
@@ -17,38 +17,43 @@ const HomePage = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [videoList, setVideoList] = useState([]);
   const [error, setError] = useState(null);
-  const { videoId } = useParams(); // Get videoId from URL params
+  const { videoid } = useParams();
+  const [videoToLoadid, setvideoToLoadid] = useState(null);
 
   useEffect(() => {
+    // console.log("videoid:", videoid);
+
     const fetchVideoData = async () => {
       try {
-        // Fetch list of videos for the sidebar
         const videoListResponse = await axios.get(
           `${API_BASE_URL}${endpoint}?api_key=${API_KEY}`
         );
+        console.log("Video List Response:", videoListResponse.data);
         const videos = videoListResponse.data;
         setVideoList(videos);
+        setvideoToLoadid(videoid? videoid:videos[0].id);
 
-        // Fetch details for the current video based on videoId
-        if (videoId) {
+        if (videoid) {
           const currentVideoResponse = await axios.get(
-            `${API_BASE_URL}${endpoint}${videoId}?api_key=${API_KEY}`
+            `${API_BASE_URL}${endpoint}${videoid}?api_key=${API_KEY}`
           );
+
           setCurrentVideo(currentVideoResponse.data);
         } else if (videos.length > 0) {
-          //Set the first video if no videoId is provided
           const defaultVideoId = videos[0].id;
           const defaultVideoResponse = await axios.get(
             `${API_BASE_URL}${endpoint}${defaultVideoId}?api_key=${API_KEY}`
           );
+          console.log("Default Video Response:", defaultVideoResponse.data);
           setCurrentVideo(defaultVideoResponse.data);
         }
       } catch (err) {
+        console.error("Fetch Error:", err);
         setError(err);
       }
     };
     fetchVideoData();
-  }, [videoId]); // Dependency on videoId
+  }, [videoid]);
 
   const handleVideoSelect = async (video) => {
     try {
@@ -57,6 +62,7 @@ const HomePage = () => {
       );
       setCurrentVideo(response.data);
     } catch (err) {
+      console.error("Error selecting video:", err);
       setError(err);
     }
   };
@@ -88,18 +94,19 @@ const HomePage = () => {
         )
       );
     } catch (err) {
+      console.error("Error adding comment:", err);
       setError(err);
     }
   };
 
-  const filteredVideoList = videoList.filter(
-    (video) => video.id !== currentVideo?.id
-  );
-
+  const filteredVideoList = videoList.filter((video) => video.id !== videoToLoadid);
+  if (!currentVideo || !videoList || !filteredVideoList || !videoToLoadid) {
+    return <p>loading...</p>;
+  }
   return (
     <div className="homepage">
       <Header title="BrainFlix" />
-      {error && <p>Error: {error.message || "Something went wrong"}</p>}
+      {error && <p>Error: {error.message}</p>}
       {currentVideo ? (
         <>
           <MainVideo video={currentVideo} />
@@ -113,12 +120,13 @@ const HomePage = () => {
               <Comments comments={currentVideo.comments} />
             </div>
             <div className="homepage__sidebar-section">
-              {videoList.length > 0 && (
+        
                 <SideBar
                   videos={filteredVideoList}
-                  onVideoSelect={handleVideoSelect}
+                  //   onVideoSelect={handleVideoSelect}
+                  setCurrentVideo={setCurrentVideo}
                 />
-              )}
+            
             </div>
           </div>
         </>
