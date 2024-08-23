@@ -8,13 +8,13 @@ const UploadVideo = () => {
   const navigate = useNavigate();
 
   const handlePublishClick = () => {
-    // Display a custom alert with a button to navigate to the home page
+    // alert with a button to navigate to the home page
     const confirmAction = window.confirm(
       'Your video is uploaded successfully. Do you want to go to the home page?'
     );
 
     if (confirmAction) {
-      navigate('/'); // Redirect to the home page
+      navigate('/'); // Redirect to the Home page
     }
   };
 
