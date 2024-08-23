@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import MainVideo from "../components/MainVideo/MainVideo";
-import SideBar from "../components/SideBar/SideBar";
-import Header from "../components/Header/Header";
-import Comments from "../components/Comments/Comments";
-import VideoDescription from "../components/VideoDescription/VideoDescription";
-import Form from "../components/Form/Form";
+import MainVideo from "../../components/MainVideo/MainVideo";
+import SideBar from "../../components/SideBar/sidebar";
+import Header from "../../components/Header/Header";
+import Comments from "../../components/Comments/Comments";
+import VideoDescription from "../../components/VideoDescription/VideoDescription";
+import Form from "../../components/Form/Form";
 import "./HomePage.scss";
+
 
 const API_BASE_URL = "https://unit-3-project-api-0a5620414506.herokuapp.com/";
 const API_KEY = "bad8b207-28f3-4bb9-9ecc-70c59b264008";
