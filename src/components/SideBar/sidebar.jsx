@@ -1,6 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-=======
 import VideoItem from '../VideoItem/VideoItem';
 <<<<<<< HEAD
 >>>>>>> feature/Form

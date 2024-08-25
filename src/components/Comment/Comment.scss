@@ -1,6 +1,6 @@
-@use "../../Styles/partials/global";
-@use '/src/Styles/partials/variables' as *;
-@import '/src/Styles/partials/mixins';
+@use "../../Styles/partials/global" as *;
+@use '../../Styles/partials/variables' as *;
+@use '../../Styles/partials/mixins' as *;
 
 .comment{
 
