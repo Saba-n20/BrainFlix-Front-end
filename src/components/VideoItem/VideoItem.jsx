@@ -2,8 +2,7 @@ import React from "react";
 import './VideoItem.scss';
 const VideoItem = ({video}) =>{
     return(
-        <div 
-          key={video.id} 
+        <div  
           className="videoList__items" 
         >
           <img 
