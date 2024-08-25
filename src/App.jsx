@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import MainVideo from "./components/MainVideo/MainVideo";
 import SideBar from "./components/SideBar/sidebar";
@@ -72,6 +73,22 @@ const App = () => {
         </div>
       </div>
     </div>
+=======
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+
+import "./App.scss";
+
+const App = () => {
+ 
+  return (
+    <BrowserRouter>
+			<Routes>
+				<Route path='/' element={<HomePage />}></Route>
+        <Route path="/videos/:videoid" element={<HomePage />} />
+			</Routes>
+		</BrowserRouter>
+>>>>>>> feature/Form
   );
 };
 

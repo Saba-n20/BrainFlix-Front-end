@@ -1,10 +1,15 @@
 import React from 'react';
+<<<<<<< HEAD
+=======
+import VideoItem from '../VideoItem/VideoItem';
+>>>>>>> feature/Form
 import './sidebar.scss';
 
 const Sidebar = ({ videos, onVideoSelect }) => {
   return (
     <div className="sidebar">
       <h3 className='sidebar__title'>NEXT VIDEO</h3>
+<<<<<<< HEAD
       {videos.map((video) => (
         <div 
           key={video.id} 
@@ -22,6 +27,12 @@ const Sidebar = ({ videos, onVideoSelect }) => {
           </div>
         </div>
       ))}
+=======
+      {videos.map((video) => {
+        < VideoItem video={video} onVideoSelect={onVideoSelect}/>
+        
+    })}
+>>>>>>> feature/Form
     </div>
   );
 };
