@@ -17,14 +17,14 @@ const Form = ({ onAddComment, video }) => {
     }
 
     const newComment = {
-      // Exclude id and timestamp here; API might handle these
       name: "Mohan Muruge", // Replace with dynamic user name if needed
       comment: comment.trim(),
     };
 
     onAddComment(newComment)
       .then(() => {
-        setComment(""); // Clear the input field after successful submission
+        // Clear the input field after successful submission
+        setComment(""); 
       })
       .catch((err) => {
         console.error("Error adding comment:", err);
@@ -41,9 +41,8 @@ const Form = ({ onAddComment, video }) => {
         <div className="form__input">
           <label className="form__input-label">JOIN THE CONVERSATION</label>
           <div className="form__txt-btn">
-            <input
+            <textarea
               className="form__input-txt"
-              type="text"
               value={comment}
               onChange={handleInputChange}
               placeholder="Add new comment"

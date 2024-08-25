@@ -1,11 +1,10 @@
 import React from "react";
 import './VideoItem.scss';
-const VideoItem = ({video, setCurrentVideo}) =>{
+const VideoItem = ({video}) =>{
     return(
         <div 
           key={video.id} 
           className="videoList__items" 
-          onClick={() => setCurrentVideo(video)}
         >
           <img 
             src={video.image}

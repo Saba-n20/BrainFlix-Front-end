@@ -138,8 +138,9 @@
   &__upload-icon {
     position: absolute;
     right: 20.3125rem;
-    bottom: 0.3125rem;
+    top: 1.0625rem;
     height: 1.5625rem;
+    transform: translateY(-50%);
     @include tablet {
       right: 9.0625rem;
     }

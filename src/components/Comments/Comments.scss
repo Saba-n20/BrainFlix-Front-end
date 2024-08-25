@@ -7,57 +7,6 @@
     @include tablet{
         padding: 0rem 1.75rem 0rem 1.75rem;
     }
-    &__container{
-        display: flex;
-        flex-direction: column;
-        border-bottom: 0.0625rem solid $mercury;
-        padding-bottom: 0.75rem;
-        padding-left: 1.625rem;
-        @include tablet{
-            padding-left: 0rem;
-        }
-        @include desktop{
-            padding-left: 5.375rem;
-        }
-    }
-    &__avatar-info{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-    &__avatar{
-        width: 3.125rem;
-        height: 3.125rem;
-        border-radius: 50%; /* Make the avatar circular */
-        margin-right: 0.625rem;
-        background-color: $mercury; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        flex-shrink: unset;
-        margin-top: 0.625rem;
-        @include desktop{
-            width: 4rem;
-            height: 4rem;
-        }
-        
-    }
-    &__info{
-        width:100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    &__name{
-        @include tablet-h3;
-    }
-
-    
-    &__text{
-        padding-left: 4.375rem;
-        @include tablet{
-            @include tablet-p;
-        }
-    }
+   
+   
 }
