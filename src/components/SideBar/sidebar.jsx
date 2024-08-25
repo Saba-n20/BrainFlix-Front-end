@@ -2,6 +2,7 @@ import React from 'react';
 <<<<<<< HEAD
 =======
 import VideoItem from '../VideoItem/VideoItem';
+<<<<<<< HEAD
 >>>>>>> feature/Form
 import './sidebar.scss';
 
@@ -33,9 +34,22 @@ const Sidebar = ({ videos, onVideoSelect }) => {
         
     })}
 >>>>>>> feature/Form
+=======
+import { Link } from 'react-router-dom';
+import './SideBar.scss';
+const SideBar = ({ videos, setCurrentVideo }) => {
+  return (
+    <div className="sidebar">
+      <h3 className="sidebar__title">NEXT VIDEO</h3>
+      {videos.map((video) => {
+        return (
+          <Link to={`/videos/${video.id}`}>
+            <VideoItem video={video} setCurrentVideo={setCurrentVideo} />
+          </Link>
+        );
+      })}
+>>>>>>> feature/VideoItem
     </div>
   );
 };
-
-
-export default Sidebar;
+export default SideBar;
