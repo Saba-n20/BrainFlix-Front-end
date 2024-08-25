@@ -56,6 +56,13 @@
         }
     }
 
+    &__txt-btn{
+        @include tablet{
+        display: flex;
+        flex-direction: row;
+        }
+    }
+
     &__input-txt-btn{
         @include tablet{
             display: flex;
@@ -69,8 +76,10 @@
         margin-left: 1.5rem;
         margin-bottom: 0.5rem;
         border-radius: 0.25rem;
+        padding-left: 0.625rem;
         border: 1px solid $silver;
-        background-color: $mercury;
+        background-color: $alabaster;
+        resize: none;
         &::placeholder{
             color: $brainflix-black;
             padding-top: 0.5rem;
@@ -80,6 +89,8 @@
             height: 3.125rem;
             width: 65%;
             margin-left: 1.5rem;
+            padding: 0rem;
+            @include tablet-btn-lab;
             &::placeholder{
                 padding-left: 1rem;
             }
@@ -95,6 +106,8 @@
             background-color: $brainflix-blue;
             color: $white;
             margin-left: 1.5rem;
+            margin-top: 1rem;
+            transform: translateY(-50%);
             position: relative;
             &:hover {
               background-color: $brainflix-darkblue;
@@ -103,6 +116,7 @@
             @include tablet {
               width: 25%;
               height: 3.2rem;
+              margin-top: 1.5rem;
               @include tablet-btn-lab;
             }
             @include desktop{
