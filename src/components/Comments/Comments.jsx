@@ -2,7 +2,7 @@ import React from 'react';
 import './Comments.scss';
 
 const Comments = ({ comments }) => {
-  // Sort comments, newest first
+  //Sort comments, newest first
   const sortedComments = [...comments].sort((a, b) => b.timestamp - a.timestamp);
 
   return (

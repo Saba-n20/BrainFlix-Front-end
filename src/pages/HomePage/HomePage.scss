@@ -1,6 +1,6 @@
-@use "../Styles/partials/global" as *;
-@use '../Styles/partials/variables' as *;
-@use '../Styles/partials/mixins' as *;
+@use "../../Styles/partials/global" as *;
+@use '../../Styles/partials/variables' as *;
+@use '../../Styles/partials/mixins' as *;
 .homepage{
     &__des-comments-next{
         display: flex;

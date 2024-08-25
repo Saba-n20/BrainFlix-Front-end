@@ -17,24 +17,26 @@ const Form = ({ onAddComment, video }) => {
     }
 
     const newComment = {
-      //a unique id based on timestamp
-      id: Date.now().toString(),
-      // Assuming a static name for the example :)
-      name: "Mohan Muruge", 
-      comment,
-      likes: 0,
-      timestamp: Date.now(),
+      // Exclude id and timestamp here; API might handle these
+      name: "Mohan Muruge", // Replace with dynamic user name if needed
+      comment: comment.trim(),
     };
 
-    onAddComment(newComment);
-    setComment(""); // Clear the input field after submission
+    onAddComment(newComment)
+      .then(() => {
+        setComment(""); // Clear the input field after successful submission
+      })
+      .catch((err) => {
+        console.error("Error adding comment:", err);
+        alert("Failed to add comment. Please try again.");
+      });
   };
 
   return (
     <div className="form">
       <div className="form__container">
         <div className="form__avatar">
-          <img className="form__avatar-image" src={avatar} alt="Mohan muruge" />
+          <img className="form__avatar-image" src={avatar} alt="Mohan Muruge" />
         </div>
         <div className="form__input">
           <label className="form__input-label">JOIN THE CONVERSATION</label>
