@@ -9,9 +9,7 @@ import VideoDescription from "../../components/VideoDescription/VideoDescription
 import Form from "../../components/Form/Form";
 import "./HomePage.scss";
 
-
-const API_BASE_URL = "https://unit-3-project-api-0a5620414506.herokuapp.com/";
-const API_KEY = "bad8b207-28f3-4bb9-9ecc-70c59b264008";
+const API_BASE_URL = "http://localhost:8081/";
 const endpoint = "videos/";
 
 const HomePage = () => {
@@ -22,45 +20,58 @@ const HomePage = () => {
   const { videoid } = useParams();
   const [videoToLoadid, setVideoToLoadid] = useState(null);
 
+  // Effect to fetch the list of videos
   useEffect(() => {
-    const fetchVideoData = async () => {
+    const fetchVideoList = async () => {
       setLoading(true);
       try {
-        // Fetch the list of videos
         const videoListResponse = await axios.get(
-          `${API_BASE_URL}${endpoint}?api_key=${API_KEY}`
+          `${API_BASE_URL}${endpoint}`
         );
         const videos = videoListResponse.data;
         setVideoList(videos);
-        const idToLoad = videoid || (videos.length > 0 ? videos[0].id : null);
+        const idToLoad = videoid || (videos.length > 0 ? videos[0].id : null);//*
         setVideoToLoadid(idToLoad);
-
-        // Fetch the current video details
-        if (idToLoad) {
-          const currentVideoResponse = await axios.get(
-            `${API_BASE_URL}${endpoint}${idToLoad}?api_key=${API_KEY}`
-          );
-          setCurrentVideo(currentVideoResponse.data);
-        } else {
-          setCurrentVideo(null);
-        }
       } catch (err) {
-        console.error("Fetch Error:", err);
+        console.error("Fetch Video List Error:", err);
         setError(err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchVideoData();
-  }, [videoid]);
+    fetchVideoList();
+  }, [videoid]); 
+
+  //fetch current video details based on videoToLoadid
+  useEffect(() => {
+    const fetchCurrentVideo = async () => {
+      if (!videoToLoadid) return;
+
+      setLoading(true);
+      try {
+        const currentVideoResponse = await axios.get(
+          `${API_BASE_URL}${endpoint}${videoToLoadid}`
+        );
+        setCurrentVideo(currentVideoResponse.data);
+      } catch (err) {
+        console.error("Fetch Current Video Error:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCurrentVideo();
+  }, [videoToLoadid]); 
 
   const handleVideoSelect = async (video) => {
     try {
       const response = await axios.get(
-        `${API_BASE_URL}${endpoint}${video.id}?api_key=${API_KEY}`
+        `${API_BASE_URL}${endpoint}${video.id}`
       );
       setCurrentVideo(response.data);
+      setVideoToLoadid(video.id); 
     } catch (err) {
       console.error("Error selecting video:", err);
       setError(err);
@@ -69,19 +80,19 @@ const HomePage = () => {
 
   const handleAddComment = async (newComment) => {
     if (!currentVideo) return;
-  
+
     try {
       const response = await axios.post(
-        `${API_BASE_URL}${endpoint}${currentVideo.id}/comments?api_key=${API_KEY}`,
-        newComment,
+        `${API_BASE_URL}${endpoint}${currentVideo.id}/comments`,
+        newComment
       );
-  
+
       const addedComment = response.data;
       setCurrentVideo((prevVideo) => ({
         ...prevVideo,
-        comments: [...prevVideo.comments, addedComment],
+        comments: [...prevVideo.comments, addedComment]
       }));
-  
+
       setVideoList((prevList) =>
         prevList.map((video) =>
           video.id === currentVideo.id
@@ -92,10 +103,10 @@ const HomePage = () => {
     } catch (err) {
       console.error("Error adding comment:", err);
       setError(err);
-      throw err; // Re-throw error to handle in the component
+      throw err; 
     }
   };
-  
+
   const filteredVideoList = videoList.filter((video) => video.id !== videoToLoadid);
 
   if (loading) {
