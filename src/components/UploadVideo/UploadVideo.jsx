@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import upload__video from "../../Assets/Images/Upload-video-preview.jpg";
 import publish from "../../Assets/Icons/publish.svg";
-import new__video from "../../Assets/Images/image3.jpg"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./UploadVideo.scss";
@@ -49,7 +48,7 @@ const UploadVideo = () => {
   };
 
   return (
-    <div className="upload">
+    <form className="upload">
       <h1 className="upload__title">Upload Video</h1>
       <div className="upload__container">
         <div className="upload__thumbnail">
@@ -103,7 +102,7 @@ const UploadVideo = () => {
           PUBLISH
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
