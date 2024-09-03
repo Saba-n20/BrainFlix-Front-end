@@ -10,7 +10,7 @@ const Form = ({ onAddComment, video }) => {
     setComment(e.target.value);
   };
 
-  const handleClick = () => {
+  const handleSubmitComment = () => {
     if (comment.trim() === "") {
       alert("Comment cannot be empty!");
       return;
@@ -47,7 +47,7 @@ const Form = ({ onAddComment, video }) => {
               onChange={handleInputChange}
               placeholder="Add new comment"
             />
-            <button className="form__button" onClick={handleClick}>
+            <button className="form__button" onClick={handleSubmitComment}>
               <img
                 className="form__comment-icon"
                 src={Addcomment}

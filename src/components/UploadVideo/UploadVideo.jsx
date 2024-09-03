@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import upload__video from "../../Assets/Images/Upload-video-preview.jpg";
 import publish from "../../Assets/Icons/publish.svg";
-import "./UploadVideo.scss";
+import new__video from "../../Assets/Images/image3.jpg"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./UploadVideo.scss";
 
 
 const API_BASE_URL = "http://localhost:8081/"; 
@@ -19,7 +20,7 @@ const UploadVideo = () => {
     const videoData = {
       title,
       description,
-      thumbnail: '../../Assets/Images/image3.jpg',
+      image: 'http://localhost:8081/images/image3.jpg',
       uploadDate: new Date().toISOString(),
     };
 
@@ -90,7 +91,7 @@ const UploadVideo = () => {
           CANCEL
         </button>
         <button
-          type="button"
+          type="submit"
           className="upload__btn-publish"
           onClick={handlePublishClick}
         >
