@@ -30,7 +30,7 @@ const HomePage = () => {
         );
         const videos = videoListResponse.data;
         setVideoList(videos);
-        const idToLoad = videoid || (videos.length > 0 ? videos[0].id : null);//*
+        const idToLoad = videoid || (videos.length > 0 ? videos[0].id : null);
         setVideoToLoadid(idToLoad);
       } catch (err) {
         console.error("Fetch Video List Error:", err);
