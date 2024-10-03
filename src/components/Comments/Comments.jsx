@@ -1,8 +1,8 @@
-import React from 'react';
-import Comment from '../Comment/Comment';
-import './Comments.scss';
+import React from "react";
+import Comment from "../Comment/Comment";
+import "./Comments.scss";
 
-const Comments = ({ comments, videoId, onDelete }) => {
+const Comments = ({ comments, videoId, onDelete, onLike }) => {
   const sortedComments = [...comments].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
   return (
@@ -13,7 +13,8 @@ const Comments = ({ comments, videoId, onDelete }) => {
             key={comment.id} 
             comment={comment} 
             videoId={videoId} 
-            onDelete={onDelete}
+            onDelete={onDelete} 
+            onLike={onLike} // Pass the like handler
           />
         ))
       ) : (

@@ -86,12 +86,11 @@ const HomePage = () => {
   };
 
   const handleDeleteComment = async (commentId) => {
-    const deleteUrl = `${API_BASE_URL}${endpoint}${currentVideo.id}/comments/${commentId}`;
-    console.log('Delete URL:', deleteUrl);
-
     try {
-      await axios.delete(deleteUrl);
-      const updatedComments = currentVideo.comments.filter((comment) => comment.id !== commentId);
+      await axios.delete(`${API_BASE_URL}${endpoint}${currentVideo.id}/comments/${commentId}`);
+      const updatedComments = currentVideo.comments.filter(
+        (comment) => comment.id !== commentId
+      );
       setCurrentVideo((prev) => ({ ...prev, comments: updatedComments }));
     } catch (err) {
       console.error("Error deleting comment:", err);
@@ -99,26 +98,68 @@ const HomePage = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading data</div>;
+  const handleLikeComment = async (commentId) => {
+    const likeUrl = `${API_BASE_URL}${endpoint}${currentVideo.id}/comments/${commentId}/like`;
+
+    try {
+      const response = await axios.post(likeUrl);
+      const updatedComment = response.data;
+
+      setCurrentVideo((prev) => ({
+        ...prev,
+        comments: prev.comments.map((comment) =>
+          comment.id === updatedComment.id ? updatedComment : comment
+        ),
+      }));
+    } catch (err) {
+      console.error("Error liking comment:", err);
+      setError(err);
+    }
+  };
+
+  const filteredVideoList = videoList.filter(
+    (video) => video.id !== videoToLoadid
+  );
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
-    <div className="HomePage">
-      <Header />
-      <div className="mainContent">
-        {currentVideo && (
-          <>
-            <MainVideo video={currentVideo} />
-            <VideoDescription video={currentVideo} />
-            <Comments 
-              comments={currentVideo.comments} 
-              onDelete={handleDeleteComment} 
-            />
-            <Form onAddComment={handleAddComment} />
-          </>
-        )}
-        <SideBar videos={videoList} onVideoSelect={handleVideoSelect} />
-      </div>
+    <div className="homepage">
+      <Header title="BrainFlix" />
+      {currentVideo ? (
+        <>
+          <MainVideo video={currentVideo} />
+          <div className="homepage__des-comments-next">
+            <div className="homepage__des-comments">
+              <VideoDescription video={currentVideo} />
+              <div className="homepage__comments-number">
+                <h2>{currentVideo.comments.length} Comments</h2>
+              </div>
+              <Form onAddComment={handleAddComment} video={currentVideo} />
+              <Comments
+                comments={currentVideo.comments}
+                videoId={currentVideo.id}
+                onDelete={handleDeleteComment}
+                onLike={handleLikeComment} // Pass the like handler
+              />
+            </div>
+            <div className="homepage__sidebar-section">
+              <SideBar
+                videos={filteredVideoList}
+                onVideoSelect={handleVideoSelect}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <p>No video selected</p>
+      )}
     </div>
   );
 };
