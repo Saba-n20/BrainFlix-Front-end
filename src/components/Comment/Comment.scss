@@ -57,4 +57,13 @@
             @include tablet-p;
         }
     }
+    &__actions{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 3.4375rem;
+    }
+    &__icon{
+        width: 1.5625rem;
+    }
 }

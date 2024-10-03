@@ -20,14 +20,11 @@ const HomePage = () => {
   const { videoid } = useParams();
   const [videoToLoadid, setVideoToLoadid] = useState(null);
 
-  // Effect to fetch the list of videos
   useEffect(() => {
     const fetchVideoList = async () => {
       setLoading(true);
       try {
-        const videoListResponse = await axios.get(
-          `${API_BASE_URL}${endpoint}`
-        );
+        const videoListResponse = await axios.get(`${API_BASE_URL}${endpoint}`);
         const videos = videoListResponse.data;
         setVideoList(videos);
         const idToLoad = videoid || (videos.length > 0 ? videos[0].id : null);
@@ -41,9 +38,8 @@ const HomePage = () => {
     };
 
     fetchVideoList();
-  }, [videoid]); 
+  }, [videoid]);
 
-  //fetch current video details based on videoToLoadid
   useEffect(() => {
     const fetchCurrentVideo = async () => {
       if (!videoToLoadid) return;
@@ -63,19 +59,10 @@ const HomePage = () => {
     };
 
     fetchCurrentVideo();
-  }, [videoToLoadid]); 
+  }, [videoToLoadid]);
 
   const handleVideoSelect = async (video) => {
-    try {
-      const response = await axios.get(
-        `${API_BASE_URL}${endpoint}${video.id}`
-      );
-      setCurrentVideo(response.data);
-      setVideoToLoadid(video.id); 
-    } catch (err) {
-      console.error("Error selecting video:", err);
-      setError(err);
-    }
+    setVideoToLoadid(video.id);
   };
 
   const handleAddComment = async (newComment) => {
@@ -90,59 +77,48 @@ const HomePage = () => {
       const addedComment = response.data;
       setCurrentVideo((prevVideo) => ({
         ...prevVideo,
-        comments: [...prevVideo.comments, addedComment]
+        comments: [...prevVideo.comments, addedComment],
       }));
-
-      setVideoList((prevList) =>
-        prevList.map((video) =>
-          video.id === currentVideo.id
-            ? { ...currentVideo, comments: [...currentVideo.comments, addedComment] }
-            : video
-        )
-      );
     } catch (err) {
       console.error("Error adding comment:", err);
       setError(err);
-      throw err; 
     }
   };
 
-  const filteredVideoList = videoList.filter((video) => video.id !== videoToLoadid);
+  const handleDeleteComment = async (commentId) => {
+    const deleteUrl = `${API_BASE_URL}${endpoint}${currentVideo.id}/comments/${commentId}`;
+    console.log('Delete URL:', deleteUrl);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+    try {
+      await axios.delete(deleteUrl);
+      const updatedComments = currentVideo.comments.filter((comment) => comment.id !== commentId);
+      setCurrentVideo((prev) => ({ ...prev, comments: updatedComments }));
+    } catch (err) {
+      console.error("Error deleting comment:", err);
+      setError(err);
+    }
+  };
 
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading data</div>;
 
   return (
-    <div className="homepage">
-      <Header title="BrainFlix" />
-      {currentVideo ? (
-        <>
-          <MainVideo video={currentVideo} />
-          <div className="homepage__des-comments-next">
-            <div className="homepage__des-comments">
-              <VideoDescription video={currentVideo} />
-              <div className="homepage__comments-number">
-                <h2>{currentVideo.comments.length} Comments</h2>
-              </div>
-              <Form onAddComment={handleAddComment} video={currentVideo} />
-              <Comments comments={currentVideo.comments} />
-            </div>
-            <div className="homepage__sidebar-section">
-              <SideBar
-                videos={filteredVideoList}
-                onVideoSelect={handleVideoSelect}
-              />
-            </div>
-          </div>
-        </>
-      ) : (
-        <p>No video selected</p>
-      )}
+    <div className="HomePage">
+      <Header />
+      <div className="mainContent">
+        {currentVideo && (
+          <>
+            <MainVideo video={currentVideo} />
+            <VideoDescription video={currentVideo} />
+            <Comments 
+              comments={currentVideo.comments} 
+              onDelete={handleDeleteComment} 
+            />
+            <Form onAddComment={handleAddComment} />
+          </>
+        )}
+        <SideBar videos={videoList} onVideoSelect={handleVideoSelect} />
+      </div>
     </div>
   );
 };
