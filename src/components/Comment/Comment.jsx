@@ -68,7 +68,6 @@ const Comment = ({ comment, videoId, onDelete, onLike }) => {
         </div>
       </div>
 
-      {/* Modal for confirmation */}
       <DeleteConfirmationModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}

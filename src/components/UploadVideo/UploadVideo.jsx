@@ -3,77 +3,83 @@ import upload__video from "../../Assets/Images/Upload-video-preview.jpg";
 import publish from "../../Assets/Icons/publish.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import UploadModal from "../../components/Modal/UploadModal/UploadModal.jsx"; // Import UploadModal
 import "./UploadVideo.scss";
 
-const API_BASE_URL = "http://localhost:8081/"; 
+const API_BASE_URL = "http://localhost:8081/";
 const endpoint = "videos/";
 
 const UploadVideo = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedThumbnail, setSelectedThumbnail] = useState(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState(upload__video);
+  const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
   const navigate = useNavigate();
 
   const handlePublishClick = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
-    // Prepare video data
-    const videoData = {
-      title,
-      description,
-      channel: "Cornelia Currey",
-      views: "1,261,703",
-      likes: "729,753",
-      duration: "26:13",
-      image: 'http://localhost:8081/images/image3.jpg',
-      video: "https://unit-3-project-api-0a5620414506.herokuapp.com/stream",
-      uploadDate: new Date().toISOString(),
-      comments: [
-      {
-        id: "7ba106bf-e74a-4c21-b59e-c485a30eea45",
-        name: "Giovana Silva",
-        comment: "Can't wait to try some of these gastronomic delights in my own kitchen. Keep those delicious discoveries coming!",
-        likes: 0,
-        timestamp: 1700633862000
-      },
-      {
-        id: "921f0e8d-f9d1-44db-b4a2-a2718339891e",
-        name: "Daniel Lesage",
-        comment: "Your exploration of various cuisines and the intricate details behind each dish is both informative and mouthwatering. I've learned so much about the artistry of cooking.",
-        likes: 0,
-        timestamp: 1700547462000
-      },
-      {
-        id: "f7b9027b-e407-45fa-98f3-7d8a308ddf7c",
-        name: "Sharon Santos",
-        comment: "I'm already planning a culinary adventure inspired by your recommendations. Thanks for taking us on this delicious journey!",
-        likes: 3,
-        timestamp: 1700461062000
-      }
-    ]
-    };
+    if (!selectedVideo || !selectedThumbnail) {
+      alert('Please select both a video file and a thumbnail.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('video', selectedVideo);
+    formData.append('thumbnail', selectedThumbnail);
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('channel', 'Cornelia Currey');
+    formData.append('views', '1,261,703');
+    formData.append('likes', '729,753');
+    formData.append('duration', '26:13');
+    formData.append('uploadDate', new Date().toISOString());
 
     try {
-      // Combine base URL and endpoint
       const url = `${API_BASE_URL}${endpoint}`;
-      const response = await axios.post(url, videoData);
-      console.log('Response:', response.data);
+      await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-      // Handle successful upload
-      const confirmAction = window.confirm(
-        'Your video is uploaded successfully. Do you want to go to the home page?'
-      );
-
-      if (confirmAction) {
-        navigate('/'); // Redirect to the Home page
-      }
+      setModalOpen(true); // Open modal after successful upload
     } catch (error) {
-      console.error('Error uploading video:', error);
-      alert('Failed to upload video. Please try again.');
+      const errorMessage = error.response?.data || 'Failed to upload video. Please try again.';
+      alert(errorMessage);
     }
   };
 
   const handleCancelClick = () => {
-    navigate('/'); // Redirect to the Home page
+    navigate('/');
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (e.target.name === 'video') {
+      if (file) {
+        setSelectedVideo(file);
+        const videoThumbnailUrl = URL.createObjectURL(file);
+        setThumbnailUrl(videoThumbnailUrl);
+      }
+    } else if (e.target.name === 'thumbnail') {
+      if (file) {
+        setSelectedThumbnail(file);
+        const thumbnailUrl = URL.createObjectURL(file);
+        setThumbnailUrl(thumbnailUrl);
+      }
+    }
+  };
+
+  const handleModalConfirm = () => {
+    setModalOpen(false);
+    navigate('/'); // Redirect to the home page
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -82,11 +88,7 @@ const UploadVideo = () => {
       <div className="upload__container">
         <div className="upload__thumbnail">
           <h2 className="upload__thumbnail-title">VIDEO THUMBNAIL</h2>
-          <img
-            className="upload__img"
-            src={upload__video}
-            alt="Upload Video Preview"
-          />
+          <img className="upload__img" src={thumbnailUrl} alt="Upload Video Preview" />
         </div>
         <div className="upload__video">
           <label className="upload__title-txt-label">
@@ -97,6 +99,7 @@ const UploadVideo = () => {
               placeholder="Add a title to your video"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
           </label>
           <label className="upload__des-txt-label">
@@ -106,8 +109,37 @@ const UploadVideo = () => {
               placeholder="Add a description to your video"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             />
           </label>
+          <div className="upload__video-image">
+            <div className="upload__video-part">
+              <label className="upload__video-file-label">
+                Choose Your Video:
+                <input
+                  type="file"
+                  className="upload__video-input"
+                  name="video"
+                  accept="video/*"
+                  onChange={handleFileChange}
+                  required
+                />
+              </label>
+            </div>
+            <div className="upload__thumbnail">
+              <label className="upload__thumbnail-file-label">
+                Choose Your Thumbnail:
+                <input
+                  type="file"
+                  className="upload__thumbnail-input"
+                  name="thumbnail"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  required
+                />
+              </label>
+            </div>
+          </div>
         </div>
       </div>
       <div className="upload__buttons">
@@ -125,11 +157,20 @@ const UploadVideo = () => {
           <img
             className="upload__publish-icon"
             src={publish}
-            alt="Publish Icon"
+            alt="Publish"
           />
           PUBLISH
         </button>
       </div>
+
+      {/* UploadModal Component */}
+      <UploadModal
+        isOpen={modalOpen}
+        onClose={handleModalClose}
+        title="Success!"
+        message="Your video has been uploaded successfully. Do you want to go to the home page?"
+        onConfirm={handleModalConfirm}
+      />
     </form>
   );
 };

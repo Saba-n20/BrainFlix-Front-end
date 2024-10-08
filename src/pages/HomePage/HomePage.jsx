@@ -68,13 +68,14 @@ const HomePage = () => {
   const handleAddComment = async (newComment) => {
     if (!currentVideo) return;
 
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}${endpoint}${currentVideo.id}/comments`,
-        newComment
-      );
+    const addCommentUrl = `${API_BASE_URL}${endpoint}${currentVideo.id}/comments`;
+    console.log("Adding comment to URL:", addCommentUrl);
+    console.log("New Comment:", newComment);
 
+    try {
+      const response = await axios.post(addCommentUrl, newComment);
       const addedComment = response.data;
+
       setCurrentVideo((prevVideo) => ({
         ...prevVideo,
         comments: [...prevVideo.comments, addedComment],
@@ -146,7 +147,7 @@ const HomePage = () => {
                 comments={currentVideo.comments}
                 videoId={currentVideo.id}
                 onDelete={handleDeleteComment}
-                onLike={handleLikeComment} // Pass the like handler
+                onLike={handleLikeComment}
               />
             </div>
             <div className="homepage__sidebar-section">

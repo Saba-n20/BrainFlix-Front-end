@@ -198,4 +198,47 @@
             margin: 0rem;
         }
     }
+    &__video-image{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 8px;
+        @include tablet{
+            flex-direction: row;
+            padding: 16px;
+        }
+        @include desktop{
+            flex-direction: row;
+            width: 100%;
+            padding: 16px 16px 16px 0px;
+            margin: 0;
+        }
+    }
+    &__video-part{
+        padding-bottom: 10px;
+        @include desktop{
+            padding-left: 8px;
+        }
+    }
+    &__video-input{
+        padding-left: 30px;
+        color: $brainflix-black;
+        @include desktop{
+            padding-left: 5px;
+        }
+    }
+    &__thumbnail{
+        padding-bottom: 10px;
+        @include desktop{
+            padding-left: 8px;
+        }
+    }
+    &__thumbnail-input{
+        padding-left: 10px;
+        color: $brainflix-black;
+        @include desktop{
+            padding-left: 2px;
+        }
+    }
+    
 }

@@ -6,7 +6,7 @@ const VideoItem = ({video}) =>{
           className="videoList__items" 
         >
           <img 
-            src={video.image}
+            src={video.thumbnail}
             alt={video.title} 
             className="videoList__thumbnail" 
           />

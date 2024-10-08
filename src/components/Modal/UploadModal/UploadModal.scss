@@ -1,0 +1,67 @@
+.modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal__content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+  }
+  
+  .modal__content-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .modal__content-text {
+    margin-bottom: 20px;
+    color: #666;
+  }
+  
+  .modal__buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .modal__button-cancel,
+  .modal__button-confirm {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px; /* Smaller padding for smaller buttons */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em; /* Smaller font size */
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal__button-cancel {
+    background: #FF5C5C; /* Red color for cancel button */
+  }
+  
+  .modal__button-cancel:hover {
+    background: #FF2C2C; /* Darker red on hover */
+  }
+  
+  .modal__button-confirm {
+    background: #4A90E2; /* Blue color for confirm button */
+  }
+  
+  .modal__button-confirm:hover {
+    background: #007AFF; /* Darker blue on hover */
+  }
+  
